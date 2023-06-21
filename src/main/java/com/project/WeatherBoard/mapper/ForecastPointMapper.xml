@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.project.WeatherBoard.mapper.ForecastPointMapper">	
+		<select id="getForecastData" resultType="com.project.WeatherBoard.domain.ForecastDTO">
+			SELECT * FROM ForecastPoint WHERE address = #{address} 
+			<choose>
+				<when test="address_detail != null and address_detail != '' "> 
+					and address_detail = #{address_detail}
+				</when>
+				<otherwise>
+					and address_detail is null
+				</otherwise>
+			</choose>
+		</select>
+		
+	  	<select id="searchByMainAddress" resultType="String">
+	  		SELECT address FROM ForecastPoint GROUP BY address
+	  	</select>
+	  	
+	  	<select id="searchByMiddleAddress" resultType="String">
+	  		SELECT address_detail FROM ForecastPoint WHERE address=#{address}
+	  	</select>
+
+	</mapper>
+
